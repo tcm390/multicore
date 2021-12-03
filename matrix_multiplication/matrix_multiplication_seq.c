@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        printf("invalid input\n");
+        printf("./<programname> <number of elements> \n");
+        exit(1);
+    }
+    int input_size = atoi(argv[1]);
+    int **first_matrix = (int **)malloc(input_size * sizeof(int *));
+    int **second_matrix = (int **)malloc(input_size * sizeof(int *));
+    int **result_matrix = (int **)malloc(input_size * sizeof(int *));
+    for (int i = 0; i < input_size; i++)
+    {
+        first_matrix[i] = (int *)malloc(input_size * sizeof(int));
+        second_matrix[i] = (int *)malloc(input_size * sizeof(int));
+        result_matrix[i] = (int *)malloc(input_size * sizeof(int));
+    }
+    for (int i = 0; i < input_size; i++)
+        for (int j = 0; j < input_size; j++)
+            first_matrix[i][j] = rand() % 50;
+    for (int i = 0; i < input_size; i++)
+        for (int j = 0; j < input_size; j++)
+            second_matrix[i][j] = rand() % 50;
+    for (int i = 0; i < input_size; i++)
+        for (int j = 0; j < input_size; j++)
+            result_matrix[i][j] = 0;
+    for (int i = 0; i < input_size; i++)
+    {
+        for (int j = 0; j < input_size; j++)
+        {
+            for (int k = 0; k < input_size; k++)
+            {
+                result_matrix[i][j] += first_matrix[i][k] * second_matrix[k][j];
+            }
+        }
+    }
+    free(first_matrix);
+    free(second_matrix);
+    free(result_matrix);
+    return 0;
+}
